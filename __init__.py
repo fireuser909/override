@@ -180,5 +180,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-        
-import importlib.__init__
