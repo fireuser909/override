@@ -13,6 +13,8 @@ class override(object):
     decorated attribute's name to the  decorated attribute. If the assertion
     failed, the class will raise a subclass of OverrideError.
     
+    Note: classmethods are treated like methods, staticmethods like functions
+    
     For example usage, see testing at the end of this decorator's module.
     """
     __slots__ = "__func__", 
@@ -69,7 +71,7 @@ class OverridesBase(metaclass=OverridesMeta):
     __slots__ = ()
     
 ###---support for custom metaclasses---###
-def create_custom_overrides_meta(mcls, name=None):
+def create_custom_overrides_meta(mcls, *, name=None, doc=None):
     metaclass = mcls
     
     class Meta(metaclass):
@@ -101,10 +103,16 @@ def create_custom_overrides_meta(mcls, name=None):
             return metaclass.__setattr__(name, value)
         
     Meta.__name__ = name if name != None else "Overrides" + metaclass.__name__
+    Meta.__doc__ = doc
     return Meta
         
     
 __all__ = ['create_custom_overrides_meta', 'override', 'OverridesMeta', 'OverridesBase', 'OverrideError']
+__author__ = "Michael Roberts: chermon3@gmail.com"
+__credits__ = "Python 3.7 library
+__date__ = "September 24 2019"
+__doc__ = "Module to emulate Java's Override annotation in Python 3.7"
+__version__ = 1.0
 
 def main():
     class A(OverridesBase):
